@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Trip {
     private String startCountry;
+    private String inputCurrency;
     private List<String> neighbours;
     private Integer travelNumber;
     private Double moneyLeft;
@@ -47,5 +48,13 @@ public class Trip {
 
     public void setMoneyForCountries(List<Country> moneyForCountries) {
         this.moneyForCountries = moneyForCountries;
+    }
+
+    public String getInputCurrency() {
+        return inputCurrency;
+    }
+
+    public void setInputCurrency(String inputCurrency) {
+        this.inputCurrency = inputCurrency;
     }
 }

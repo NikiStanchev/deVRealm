@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/travel")
 public interface TripController {
 
-    @RequestMapping(path = "/{countryBudget}/{totalBudget}",
+    @RequestMapping(path = "/{startingCountry}/{countryBudget}/{totalBudget}/{currency}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity travels(
+            @PathVariable String startingCountry,
             @PathVariable Double countryBudget,
-            @PathVariable Double totalBudget
+            @PathVariable Double totalBudget,
+            @PathVariable String currency
     );
 }

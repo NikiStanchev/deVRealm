@@ -16,8 +16,8 @@ public class TripControllerImpl implements TripController {
 
 
     @Override
-    public ResponseEntity travels(Double countryBudget, Double totalBudget) {
-        Trip trip = tripService.getTripByBudget(countryBudget, totalBudget);
+    public ResponseEntity travels(String startingCountry, Double countryBudget, Double totalBudget, String currency) {
+        Trip trip = tripService.getTripByBudget(startingCountry, countryBudget, totalBudget, currency);
         return ResponseEntity.ok(trip);
     }
 }
