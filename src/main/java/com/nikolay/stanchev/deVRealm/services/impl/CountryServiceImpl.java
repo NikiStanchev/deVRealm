@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class CountryServiceImpl implements CountryService {
@@ -24,10 +21,11 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public List<String> getAllNeighbours(String country) {
+        // TODO
         if(country.equalsIgnoreCase("BG")){
             return Arrays.asList("TR", "GR", "MK", "SR", "RO");
         }
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
