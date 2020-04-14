@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -19,8 +20,11 @@ public class ExchangeServiceImpl implements ExchangeService {
     @Value("${service-exchange}")
     public String URL;
 
-    public ExchangeServiceImpl(RestTemplate restTemplate) {
+    private final CountryServiceImpl countryService;
+
+    public ExchangeServiceImpl(RestTemplate restTemplate, CountryServiceImpl countryService) {
         this.restTemplate = restTemplate;
+        this.countryService = countryService;
     }
 
     private LinkedHashMap getLatestExchangeRate() {
@@ -38,21 +42,21 @@ public class ExchangeServiceImpl implements ExchangeService {
 
     @Override
     public String getCurrencyCodeByCountryCode(String countryCode) {
-        Map<String, String> currencyCodes  = new HashMap<>() {{
-            put("SR", "RSD");
-            put("MK", "MKD");
-            put("TR", "TRY");
-            put("RO", "RON");
-            put("GR", "EUR");
-        }};
+        Map<String, String> countries = new HashMap<>();
+        try {
+            countries = countryService.getAllCountryCodes();
+            System.out.println();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        return currencyCodes.get(countryCode);
+        return countries.get(countryCode);
     }
 
     @Override
     public Double calculateCurrency(Double countryBudget, String currency, String currencyCode) {
         LinkedHashMap rates = getLatestExchangeRate();
-        return Math.round((countryBudget / Double.valueOf(rates.get(currency).toString()))
-                * Double.valueOf(rates.get(currencyCode).toString()) * 100.0) / 100.0;
+        return Math.round((countryBudget / Double.parseDouble(rates.get(currency).toString()))
+                * Double.parseDouble(rates.get(currencyCode).toString()) * 100.0) / 100.0;
     }
 }
